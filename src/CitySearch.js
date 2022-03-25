@@ -20,7 +20,7 @@ class CitySearch extends Component {
       query: suggestion,
       showSuggestions: false,
     });
-
+    this.props.setSelectedLocation(suggestion);
     this.props.updateEvents(suggestion);
   };
 
