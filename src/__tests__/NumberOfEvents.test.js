@@ -6,16 +6,18 @@ describe("<NumberOfEvents /> component", () => {
   let NumberOfEventsWrapper;
 
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents updateNumberofEvents={() => { }} />);
+    NumberOfEventsWrapper = shallow(
+      <NumberOfEvents updateNumberOfEvents={() => {}} />
+    );
   });
 
   test("render text input", () => {
     expect(NumberOfEventsWrapper.find(".numberOfEvents")).toHaveLength(1);
   });
 
-  test("change state when number input changes", async () => {
+  test("change state when number input changes", () => {
     NumberOfEventsWrapper.setState({ numberOfEvents: "32" });
-    await NumberOfEventsWrapper.find(".numberOfEvents").simulate("change", {
+    NumberOfEventsWrapper.find(".numberOfEvents").simulate("change", {
       target: { value: "8" },
     });
     expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe("8");
