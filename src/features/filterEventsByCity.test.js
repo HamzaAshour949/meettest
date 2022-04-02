@@ -7,6 +7,7 @@ import CitySearch from "../CitySearch";
 import { extractLocations } from "../api";
 
 const feature = loadFeature("./src/features/filterEventsByCity.feature");
+const locations = extractLocations(mockData);
 
 defineFeature(feature, (test) => {
   test("When user hasn't searched for a city, show upcoming events from all cities.", ({
@@ -14,7 +15,7 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given("user hasn't searched for any city", () => { });
+    given("user hasn't searched for any city", () => {});
     let AppWrapper;
     when("the user opens the app", () => {
       AppWrapper = mount(<App />);
@@ -33,7 +34,7 @@ defineFeature(feature, (test) => {
     let CitySearchWrapper;
     given("the main page is open", () => {
       CitySearchWrapper = shallow(
-        <CitySearch updateEvents={() => { }} locations={extractLocations(mockData)} />
+        <CitySearch updateEvents={() => {}} locations={locations} />
       );
     });
     when("user starts typing in the city textbox", () => {

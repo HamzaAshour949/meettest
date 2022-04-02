@@ -30,6 +30,7 @@ const credentials = {
     "https://HamzaAshour949.github.io",
     "http://localhost:3000",
     "http://localhost:4000",
+    'https://maiaralopes.github.io'
   ],
 };
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
