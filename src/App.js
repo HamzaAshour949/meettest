@@ -15,15 +15,27 @@ class App extends Component {
     numberOfEvents: 32,
     selectedLocation: "all",
     showWelcomeScreen: undefined,
+    isOnline: true
   };
 
   async componentDidMount() {
+    window.addEventListener('offline', (e) => {
+      this.setState({
+        isOnline: false
+      })
+    });
+
+    window.addEventListener('online', (e) => {
+      this.setState({
+        isOnline: true
+      })
+    });
     this.mounted = true;
     const accessToken = localStorage.getItem("access_token");
     const isTokenValid =
       !window.location.href.startsWith("http://localhost") &&
-      !(accessToken && !navigator.onLine) &&
-      (await checkToken(accessToken)).error
+        !(accessToken && !navigator.onLine) &&
+        (await checkToken(accessToken)).error
         ? false
         : true;
     const searchParams = new URLSearchParams(window.location.search);
@@ -56,8 +68,8 @@ class App extends Component {
         location === "all"
           ? events.slice(0, eventCount)
           : events
-              .filter((event) => event.location === location)
-              .slice(0, eventCount);
+            .filter((event) => event.location === location)
+            .slice(0, eventCount);
       if (this.mounted) {
         this.setState({
           events: locationEvents,
@@ -74,15 +86,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div>
-          {!navigator.onLine && (
-            <OfflineAlert
-              text={
-                "You are offline. An updated list will be loaded when you are back online."
-              }
-            />
-          )}
-        </div>
+
         <CitySearch
           locations={this.state.locations}
           updateEvents={this.updateEvents}
@@ -92,6 +96,15 @@ class App extends Component {
             this.updateNumberOfEvents(number);
           }}
         />
+        <div>
+          {!this.state.isOnline && (
+            <OfflineAlert
+              text={
+                "You are offline. An updated list will be loaded when you are back online."
+              }
+            />
+          )}
+        </div>
         <EventList
           events={this.state.events}
           numberOfEvents={this.state.numberOfEvents}
