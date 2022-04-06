@@ -15,27 +15,22 @@ class App extends Component {
     numberOfEvents: 32,
     selectedLocation: "all",
     showWelcomeScreen: undefined,
-    isOnline: true
+    isOnline: true,
   };
 
   async componentDidMount() {
-    window.addEventListener('offline', (e) => {
-      this.setState({
-        isOnline: false
-      })
-    });
-
-    window.addEventListener('online', (e) => {
-      this.setState({
-        isOnline: true
-      })
-    });
     this.mounted = true;
+    window.addEventListener("offline", (e) => {
+      this.setState({ isOnline: false });
+    });
+    window.addEventListener("online", (e) => {
+      this.setState({ isOnline: true });
+    });
     const accessToken = localStorage.getItem("access_token");
     const isTokenValid =
       !window.location.href.startsWith("http://localhost") &&
-        !(accessToken && !navigator.onLine) &&
-        (await checkToken(accessToken)).error
+      !(accessToken && !navigator.onLine) &&
+      (await checkToken(accessToken)).error
         ? false
         : true;
     const searchParams = new URLSearchParams(window.location.search);
@@ -68,8 +63,8 @@ class App extends Component {
         location === "all"
           ? events.slice(0, eventCount)
           : events
-            .filter((event) => event.location === location)
-            .slice(0, eventCount);
+              .filter((event) => event.location === location)
+              .slice(0, eventCount);
       if (this.mounted) {
         this.setState({
           events: locationEvents,
@@ -86,16 +81,6 @@ class App extends Component {
 
     return (
       <div className="App">
-
-        <CitySearch
-          locations={this.state.locations}
-          updateEvents={this.updateEvents}
-        />
-        <NumberOfEvents
-          updateNumberOfEvents={(number) => {
-            this.updateNumberOfEvents(number);
-          }}
-        />
         <div>
           {!this.state.isOnline && (
             <OfflineAlert
@@ -105,6 +90,15 @@ class App extends Component {
             />
           )}
         </div>
+        <CitySearch
+          locations={this.state.locations}
+          updateEvents={this.updateEvents}
+        />
+        <NumberOfEvents
+          updateNumberOfEvents={(number) => {
+            this.updateNumberOfEvents(number);
+          }}
+        />
         <EventList
           events={this.state.events}
           numberOfEvents={this.state.numberOfEvents}
