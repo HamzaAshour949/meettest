@@ -26,13 +26,13 @@ const credentials = {
   token_uri: "https://oauth2.googleapis.com/token",
   auth_provider_x509_cert_url: "https://googleapis.com/oauth2/v1/certs",
   redirect_uris: [
-    "https://HamzaAshour949.github.io/meettest/",
-    "http://localhost:3000"
+    "https://hamzaashour949.github.io/meettest/",
+    "http://localhost:3000",
   ],
   javascript_origins: [
-    "https://HamzaAshour949.github.io",
+    "https://hamzaashour949.github.io",
+    "http://localhost:3000",
     "http://localhost:4000",
-    "http://localhost:3000"
   ],
 };
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
